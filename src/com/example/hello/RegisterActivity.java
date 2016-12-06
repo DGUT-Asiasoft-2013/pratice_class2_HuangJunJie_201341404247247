@@ -10,7 +10,7 @@ public class RegisterActivity extends Activity {
 	SimpleTextInputCellFragment fragInputCellAccount;
 	SimpleTextInputCellFragment fragInputCellPassword;
 	SimpleTextInputCellFragment fragInputCellPasswordRepeat;
-
+	SimpleTextInputCellFragment fragInputEmailAddress;
 	PictureInputCellFragment pictureInputCell;
 	
 	@Override
@@ -22,7 +22,7 @@ public class RegisterActivity extends Activity {
 		fragInputCellAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.intput_account);
 		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);
 		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);
-		
+		fragInputEmailAddress=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.intput_email);
 		pictureInputCell=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.picture);
 	}
 	
@@ -33,11 +33,16 @@ public class RegisterActivity extends Activity {
 		
 		fragInputCellAccount.setLabelText("用户名");
 		fragInputCellAccount.setHintText("请输入用户名");
+		
 		fragInputCellPassword.setLabelText("密码");
 		fragInputCellPassword.setHintText("请输入密码");
 		fragInputCellPassword.setIsPassword(true);
+		
 		fragInputCellPasswordRepeat.setLabelText("重复密码");
 		fragInputCellPasswordRepeat.setHintText("请输入重复密码");
 		fragInputCellPasswordRepeat.setIsPassword(true);
+		
+		fragInputEmailAddress.setLabelText("电子邮箱");
+		fragInputEmailAddress.setHintText("请输入电子邮箱");
 	}
 }

@@ -33,6 +33,8 @@
             android:name="com.example.hello.RegisterActivity"
             android:theme="@android:style/Theme.NoTitleBar">           
         </activity>
+        <activity android:name="com.example.hello.HelloWorldActivity"></activity>
+        <activity android:name="com.example.hello.PasswordRecoverActivity"></activity>
     </application>
 
 </manifest>
