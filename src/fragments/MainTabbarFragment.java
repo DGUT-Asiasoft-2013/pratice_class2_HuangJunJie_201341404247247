@@ -41,9 +41,37 @@ public class MainTabbarFragment extends Fragment {
 		return view;
 	}
 	
+	public static interface OnTabSelectedListener{
+		void onTabSelected(int index);
+	}
+	
+	OnTabSelectedListener onTabSelectedListener;
+	
+	public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener){
+		this.onTabSelectedListener=onTabSelectedListener;
+	}
+	
+	public void setSelectItem(int index){
+		if(index>=0 && index<tabs.length){
+			onTabClicked(tabs[index]);
+		}
+	}
+	
 	void onTabClicked(View tab){
-		for(View otherTab : tabs){
-			otherTab.setSelected(otherTab == tab);
+		
+		int selectedIndex=-1;
+		
+		for(int i=0;i<tabs.length;i++){
+			View otherTab=tabs[i];
+			if(otherTab==tab){
+				otherTab.setSelected(true);
+				selectedIndex=i;
+			}else{
+			otherTab.setSelected(false);//boolean
+			}
+		}
+		if(onTabSelectedListener!=null && selectedIndex>=0){
+			onTabSelectedListener.onTabSelected(selectedIndex);
 		}
 	}
 }
