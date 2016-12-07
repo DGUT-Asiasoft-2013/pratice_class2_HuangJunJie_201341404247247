@@ -3,11 +3,14 @@ package com.example.hello;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import fragments.MainTabbarFragment;
+import fragments.MainTabbarFragment.OnNewClickedListener;
 import fragments.MainTabbarFragment.OnTabSelectedListener;
 import pages.FeedListFragment;
 import pages.MeListFragment;
+import pages.NewListActivity;
 import pages.NotesListFragment;
 import pages.SearchListFragment;
 
@@ -31,6 +34,16 @@ public class HelloWorldActivity extends Activity {
 			@Override
 			public void onTabSelected(int index) {
 				changeContentFragment(index);
+			}
+		});
+		
+		tabbar.setOnNewClickedListener(new OnNewClickedListener() {
+			
+			@Override
+			public void onNewClicked() {
+				// TODO Auto-generated method stub
+				bringUpEditor();
+				
 			}
 		});
 		
@@ -59,6 +72,11 @@ public class HelloWorldActivity extends Activity {
 		getFragmentManager().beginTransaction().replace(R.id.contnet, newFrag).commit();
 	}
 
+	void bringUpEditor(){
+		Intent itnt=new Intent(this,NewListActivity.class);
+		startActivity(itnt);
+		overridePendingTransition(R.anim.slide_in_bottom, R.anim.none);
+	}
 
     
 }

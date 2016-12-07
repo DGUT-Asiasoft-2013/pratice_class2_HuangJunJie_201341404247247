@@ -14,14 +14,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="FEEDS"
-            />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray" />
+        
     </FrameLayout>
     
-    <TextView
-        android:id="@+id/page_feeds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="feeds" />
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="44dp" >
+    </ListView>
+    
 </FrameLayout>

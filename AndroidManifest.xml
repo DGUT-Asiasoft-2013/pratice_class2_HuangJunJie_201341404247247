@@ -35,6 +35,8 @@
         </activity>
         <activity android:name="com.example.hello.HelloWorldActivity"></activity>
         <activity android:name="com.example.hello.PasswordRecoverActivity"></activity>
+        <activity android:name="com.example.hello.FeedContentActivity"></activity>
+        <activity android:name="pages.NewListActivity"></activity>
     </application>
 
 </manifest>
