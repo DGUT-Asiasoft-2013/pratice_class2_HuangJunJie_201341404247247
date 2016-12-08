@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -61,12 +62,13 @@ public class FeedListFragment extends Fragment {
 				
 				if(convertView==null){
 					LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-					view = inflater.inflate(android.R.layout.simple_list_item_1, null);	
+					view = inflater.inflate(R.layout.feed, null);	
 				}else{
 					view = convertView;
 				}
 				
-				TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+				TextView text1 = (TextView) view.findViewById(R.id.textView1);
+				ImageView img=(ImageView) view.findViewById(R.id.imageView1);
 				text1.setText(data[position]);
 				
 				return view;

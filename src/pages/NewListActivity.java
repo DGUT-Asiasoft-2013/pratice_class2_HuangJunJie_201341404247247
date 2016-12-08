@@ -19,7 +19,7 @@ public class NewListActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_content);
 		
-findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
