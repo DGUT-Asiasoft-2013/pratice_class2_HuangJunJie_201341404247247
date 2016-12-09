@@ -12,9 +12,11 @@ import inputcells.PictureInputCellFragment;
 import inputcells.SimpleTextInputCellFragment;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RegisterActivity extends Activity {
@@ -24,7 +26,7 @@ public class RegisterActivity extends Activity {
 	SimpleTextInputCellFragment fragInputCellPassword;
 	SimpleTextInputCellFragment fragInputCellPasswordRepeat;
 	SimpleTextInputCellFragment fragInputEmailAddress;
-	PictureInputCellFragment pictureInputCell;
+	PictureInputCellFragment fragInputAvatar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +39,14 @@ public class RegisterActivity extends Activity {
 		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);
 		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);
 		fragInputEmailAddress=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.intput_email);
-		pictureInputCell=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.picture);
+		fragInputAvatar=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.picture);
 	
-		findViewById(R.id.btn_submit).setOnClickListener(new OnClickListener() {
-			
+		findViewById(R.id.btn_submit).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				submit();
-				
+				submit();				
 			}
-		});
-		
-	
+		});		
 	}
 	
 	@Override
@@ -75,33 +73,48 @@ public class RegisterActivity extends Activity {
 	}
 	
 	
-	private void submit(){
+	  void submit(){
 		
 		String password=fragInputCellPassword.getText();
 		String passwordRepeat=fragInputCellPasswordRepeat.getText();
 		
 		if(!password.equals(passwordRepeat)){
-			new AlertDialog.Builder(RegisterActivity.this).setMessage("两次密码输入不一致").setPositiveButton("确认", null).show();
-		
+			new AlertDialog
+			.Builder(RegisterActivity.this)
+			.setMessage("两次密码输入不一致")
+			.setPositiveButton("确认", null)
+			.show();	
+			return;
 		}
+		
+		password = MD5.getMD5(password);
+		
 		String account=fragInputCellAccount.getText();
 		String name=fragInputCellName.getText();
 		String email=fragInputEmailAddress.getText();
 		
-		MultipartBody requestBodyBuilder=new MultipartBody.Builder()
+		OkHttpClient client=new OkHttpClient();
+		
+		MultipartBody.Builder requestBodyBuilder=new MultipartBody.Builder()
 				.setType(MultipartBody.FORM)
 				.addFormDataPart("account", account)
 				.addFormDataPart("name", name)
 				.addFormDataPart("email", email)
-				.addFormDataPart("passwordHash", password)
-				.build();
+				.addFormDataPart("passwordHash", password);
 		
-		OkHttpClient client=new OkHttpClient();
+		if(fragInputAvatar.getPngData()!=null){
+			requestBodyBuilder
+			.addFormDataPart(
+					"avatar","avatar",
+					RequestBody
+					.create(MediaType.parse("image/png"),
+							fragInputAvatar.getPngData()));
+		}
 		
-		okhttp3.Request request=new okhttp3.Request.Builder()
+		Request request=new Request.Builder()
 				.url("http://172.27.0.24:8080/membercenter/api/register")
 				.method("post", null)
-				.post(requestBodyBuilder)
+				.post(requestBodyBuilder.build())
 				.build();
 		
 		final 	ProgressDialog progressDialog=new ProgressDialog(this);

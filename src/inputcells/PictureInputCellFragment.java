@@ -1,5 +1,6 @@
 package inputcells;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ public class PictureInputCellFragment extends Fragment{
 	ImageView imageView;
 	TextView labelText;
 	TextView hintText;
+	byte[] pngData;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +98,13 @@ public class PictureInputCellFragment extends Fragment{
 	   startActivityForResult(itnt, REQUESTCODE_ALBUM);
    }
    
+   
+   void saveBitmap(Bitmap bmp) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bmp.compress(CompressFormat.PNG, 100, baos);
+		pngData = baos.toByteArray();
+	}
+   
    @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	
@@ -110,6 +120,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	try {
 		Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
 		imageView.setImageBitmap(bmp);
+		saveBitmap(bmp);
 		
 	} catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -126,5 +137,8 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	public void setHintText(String hintText) {
 		this.hintText.setHint(hintText);
 		
+	}
+	public byte[] getPngData(){
+		return pngData;
 	}
 }
