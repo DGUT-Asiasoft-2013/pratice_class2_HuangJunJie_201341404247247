@@ -37,5 +37,10 @@
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Administrator/Downloads/me.png</locationURI>
 		</link>
+		<link>
+			<name>res/drawable-xhdpi/boot_icon.png</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Administrator/Downloads/boot_icon.png</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
