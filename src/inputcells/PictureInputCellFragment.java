@@ -113,7 +113,9 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	   
 	   if(requestCode==REQUESTCODE_CAMERA){
 		Bitmap bmp=(Bitmap) data.getExtras().get("data");
-				imageView.setImageBitmap(bmp);
+		saveBitmap(bmp);
+			
+		imageView.setImageBitmap(bmp);
 
 	   }else if(requestCode==REQUESTCODE_ALBUM){
    

@@ -82,8 +82,9 @@ public class RegisterActivity extends Activity {
 			new AlertDialog
 			.Builder(RegisterActivity.this)
 			.setMessage("两次密码输入不一致")
-			.setPositiveButton("确认", null)
-			.show();	
+			.setPositiveButton("好", null)
+			.show();
+			
 			return;
 		}
 		
@@ -127,10 +128,11 @@ public class RegisterActivity extends Activity {
 			
 			@Override
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
+				final String responseString =arg1.body().string();
 				runOnUiThread(new Runnable() {
 					public void run() {
 						progressDialog.dismiss();
-						RegisterActivity.this.onResponse(arg0, arg1.body().toString());
+						RegisterActivity.this.onResponse(arg0, responseString);
 					}
 				});
 				
@@ -151,7 +153,7 @@ public class RegisterActivity extends Activity {
 	
 	void onResponse(Call arg0,String string){
 		new AlertDialog.Builder(this)
-		.setMessage("请求成功")
+		.setMessage("注册成功")
 		.setPositiveButton("确认", null)
 		.show();
 	}
