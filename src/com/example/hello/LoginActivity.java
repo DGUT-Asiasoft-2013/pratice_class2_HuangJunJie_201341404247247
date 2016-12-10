@@ -83,7 +83,7 @@ public class LoginActivity extends Activity {
 	void goLogin(){
 		
 		String account=fragAccount.getText();
-		String passwordHash=fragPassword.getText();
+		String passwordHash=MD5.getMD5(fragPassword.getText());
 		
 		OkHttpClient client=new OkHttpClient();
 		
@@ -126,10 +126,8 @@ public class LoginActivity extends Activity {
 								}
 							}							
 						}
-					});
-					
-				}
-				
+					});				
+				}			
 				@Override
 				public void onFailure(final Call arg0, final IOException arg1) {
 					runOnUiThread(new Runnable() {
@@ -139,15 +137,11 @@ public class LoginActivity extends Activity {
 							progressdialog.dismiss();
 							onFailure(arg0, arg1);							
 						}
-					});
-					
+					});				
 				}
-			});
-		
-		
-		
-		Intent itnt=new Intent(this,HelloWorldActivity.class);
-		startActivity(itnt);
+			});		
+//		Intent itnt=new Intent(this,HelloWorldActivity.class);
+//		startActivity(itnt);
 	}
 	
 	
@@ -163,8 +157,10 @@ public class LoginActivity extends Activity {
 				
 			}
 		}).show();
+		if(!response.equals("√‹¬Î¥ÌŒÛ£°")){
 			Intent itnt=new Intent(this,HelloWorldActivity.class);
-			startActivity(itnt);		
+			startActivity(itnt);	
+		}
 		}
 	
 	void onFailure(Call call,Exception e){
