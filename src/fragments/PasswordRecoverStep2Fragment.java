@@ -2,18 +2,20 @@ package fragments;
 
 import com.example.hello.R;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import inputcells.SimpleTextInputCellFragment;
 
 public class PasswordRecoverStep2Fragment extends Fragment {
 	SimpleTextInputCellFragment verify;
 	SimpleTextInputCellFragment password;
 	SimpleTextInputCellFragment password_repeat;
+	
 	View view;
 	
 	@Override
@@ -25,8 +27,43 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 			verify=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_verify);
 			password=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);
 			password_repeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);
+		
+		view.findViewById(R.id.btn_submit).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onSubmitClicked();			
+			}
+		});
+		
 		}		
 		return view;
+	}
+	
+	public String getText(){
+		return password.getText();
+	}
+	
+	public static interface OnSubmitClickedListener{
+		void onSubmitClicked();
+	}
+	
+	OnSubmitClickedListener OnSubmitClickedListener;
+	
+	public void setOnSubmitClickedListener(OnSubmitClickedListener onSubmitClickedListener){
+	this.OnSubmitClickedListener=onSubmitClickedListener;
+	}
+	
+	void onSubmitClicked(){
+		if(password.getText().equals(password_repeat.getText())){
+			if(OnSubmitClickedListener!=null){
+			OnSubmitClickedListener.onSubmitClicked();
+			}
+		}else{
+			new AlertDialog.Builder(getActivity())
+			.setMessage("两次输入密码不一致")
+			.show();
+		}
 	}
 	
 	@Override

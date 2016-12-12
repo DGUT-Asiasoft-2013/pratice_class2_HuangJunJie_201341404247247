@@ -1,10 +1,20 @@
 package com.example.hello;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.os.Bundle;
+import api.Server;
 import fragments.PasswordRecoverStep1Fragment;
 import fragments.PasswordRecoverStep1Fragment.OnGoNextListener;
 import fragments.PasswordRecoverStep2Fragment;
+import fragments.PasswordRecoverStep2Fragment.OnSubmitClickedListener;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class PasswordRecoverActivity extends Activity {
 
@@ -25,6 +35,16 @@ public class PasswordRecoverActivity extends Activity {
 			}
 		});
  		
+ 		step2.setOnSubmitClickedListener(new OnSubmitClickedListener() {
+			
+			@Override
+			public void onSubmitClicked() {
+				goSubmit();
+				
+			}
+		});
+ 		
+ 		
  		getFragmentManager().beginTransaction().replace(R.id.container, step1).commit();
 	}
 	
@@ -39,4 +59,30 @@ public class PasswordRecoverActivity extends Activity {
 		
 		.replace(R.id.container, step2).addToBackStack(null).commit();
 	}
+	
+	void goSubmit(){
+		OkHttpClient client=Server.getSharedClient();
+		MultipartBody body=new MultipartBody.Builder()
+				.addFormDataPart("email", step1.getText())
+				.addFormDataPart("passwordHash", MD5.getMD5(step2.getText()))
+				.build();
+				
+		Request request=Server.requestBuilderWithApi("passwordrecover").post(body).build();
+		
+		
+		client.newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});	
+		}
 }
