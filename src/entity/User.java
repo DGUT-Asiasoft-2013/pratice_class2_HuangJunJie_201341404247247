@@ -6,17 +6,17 @@ import android.R.integer;
 
 public class User implements Serializable{
 
-	integer id;
+	Integer id;
 	String account;
 	String passwordHash;
 	String name;
 	String email;
 	String avatar;
 	
-	public integer getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getAccount() {
