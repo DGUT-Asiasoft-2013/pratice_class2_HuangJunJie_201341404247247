@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Contacts.People;
 import android.view.View;
+import api.Server;
 import inputcells.SimpleTextInputCellFragment;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -85,7 +86,7 @@ public class LoginActivity extends Activity {
 		String account=fragAccount.getText();
 		String passwordHash=MD5.getMD5(fragPassword.getText());
 		
-		OkHttpClient client=new OkHttpClient();
+		OkHttpClient client=Server.getSharedClient();
 		
 		RequestBody requestbody=new MultipartBody.Builder()
 				.setType(MultipartBody.FORM)
@@ -93,8 +94,7 @@ public class LoginActivity extends Activity {
 				.addFormDataPart("passwordHash",passwordHash)
 				.build();
 		
-		Request request=new Request.Builder()
-				.url("http://172.27.0.24:8080/membercenter/api/login")
+		Request request=Server.requestBuilderWithApi("login")
 				.method("post", null)
 				.post(requestbody)
 				.build();

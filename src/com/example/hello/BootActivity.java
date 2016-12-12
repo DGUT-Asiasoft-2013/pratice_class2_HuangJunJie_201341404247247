@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import api.Server;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -44,11 +45,10 @@ public class BootActivity extends Activity {
 //			}
 //		},3000);
 		
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = Server.getSharedClient();
 		
-		Request request=new Request.Builder()
-				.url("http://172.27.0.24:8080/membercenter/")
-				.method("Get", null)
+		Request request=Server.requestBuilderWithApi("hello")
+				.method("GET",null)
 				.build();
 		
 		client.newCall(request).enqueue(new Callback() {

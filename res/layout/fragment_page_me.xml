@@ -4,11 +4,25 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/page_me"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="me" />
 
+    <ProgressBar 
+        android:id="@+id/progress"
+        android:stytle="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+    
+    <widgets.AvatarView
+        android:id="@+id/avatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"/>
+    
 </FrameLayout>

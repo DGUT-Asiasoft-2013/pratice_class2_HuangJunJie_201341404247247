@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import api.Server;
 import inputcells.PictureInputCellFragment;
 import inputcells.SimpleTextInputCellFragment;
 import okhttp3.Call;
@@ -94,7 +95,7 @@ public class RegisterActivity extends Activity {
 		String name=fragInputCellName.getText();
 		String email=fragInputEmailAddress.getText();
 		
-		OkHttpClient client=new OkHttpClient();
+		OkHttpClient client=Server.getSharedClient();
 		
 		MultipartBody.Builder requestBodyBuilder=new MultipartBody.Builder()
 				.setType(MultipartBody.FORM)
@@ -112,8 +113,7 @@ public class RegisterActivity extends Activity {
 							fragInputAvatar.getPngData()));
 		}
 		
-		Request request=new Request.Builder()
-				.url("http://172.27.0.24:8080/membercenter/api/register")
+		Request request=Server.requestBuilderWithApi("register")
 				.method("post", null)
 				.post(requestBodyBuilder.build())
 				.build();
