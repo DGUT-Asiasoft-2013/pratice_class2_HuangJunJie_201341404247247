@@ -105,4 +105,11 @@ public class MainTabbarFragment extends Fragment {
 		if(onNewClickedListener!=null)
 			onNewClickedListener.onNewClicked();
 	}
+
+	public int getSelectedIndex() {
+		for (int i = 0; i < tabs.length; i++) {
+			if(tabs[i].isSelected()) return i;
+		}
+		return -1;
+	}
 }
