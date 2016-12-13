@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Article {
+public class Article implements Serializable{
 
 	Integer id;
 	Date createDate;
@@ -12,6 +13,7 @@ public class Article {
 	String text;
 	String authorAvatar;
 	String authorName;
+	
 	public Integer getId() {
 		return id;
 	}

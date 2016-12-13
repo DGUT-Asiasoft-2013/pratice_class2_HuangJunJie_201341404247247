@@ -3,6 +3,8 @@ package com.example.hello;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import api.Server;
 import fragments.PasswordRecoverStep1Fragment;
@@ -74,15 +76,30 @@ public class PasswordRecoverActivity extends Activity {
 			
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				// TODO Auto-generated method stub
-				
+					
+				runOnUiThread(new Runnable() {
+					public void run() {
+						PasswordRecoverActivity.this.onResponse();
+					}
+				});				
 			}
 			
 			@Override
-			public void onFailure(Call arg0, IOException arg1) {
-				// TODO Auto-generated method stub
+			public void onFailure(Call arg0, IOException arg1) {				
 				
 			}
 		});	
+	}
+		
+		void onResponse(){
+			new AlertDialog.Builder(this).setMessage("密码更改成功！")
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();	
+					overridePendingTransition(R.anim.none, R.anim.slide_out_bottom);
+				}
+			}).show();				
 		}
 }

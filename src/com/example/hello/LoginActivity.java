@@ -146,17 +146,17 @@ public class LoginActivity extends Activity {
 	
 	
 	void onResponse(Call call,String response){
-		new AlertDialog.Builder(this)
-		.setTitle("请求成功")
-		.setMessage(response)
-		.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				
-			}
-		}).show();
+//		new AlertDialog.Builder(this)
+//		.setTitle("请求成功")
+//		.setMessage(response)
+//		.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		}).show();
 		if(!response.equals("密码错误！")){
 			Intent itnt=new Intent(this,HelloWorldActivity.class);
 			startActivity(itnt);	
