@@ -1,6 +1,7 @@
 package pages;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParsePosition;
 import java.util.List;
 import java.util.Random;
@@ -17,6 +18,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,9 +108,9 @@ public class FeedListFragment extends Fragment {
 				Article article=data.get(position);
 				
 				textContent.setText(article.getText());
-				textTitle.setText(article.getText());
-				textAuthorName.setText(article.getAuthorName());
-				avatar.load(Server.serverAddress+article.getAuthorAvatar());
+				textTitle.setText(article.getTitle());			
+				textAuthorName.setText(article.getAuthor().getName());
+				avatar.load(article.getAuthor());
 				
 				String dateStr=DateFormat.format("yyyy-MM-dd hh:mm", article.getCreateDate()).toString();
 				textDate.setText(dateStr);
@@ -136,10 +138,10 @@ public class FeedListFragment extends Fragment {
 			}
 		};
 		void onItemClicked(int position){
-			Article text=data.get(position);
+			Article pos=data.get(position);
 			
 			Intent itnt=new Intent(this.getActivity(),FeedContentActivity.class);
-			itnt.putExtra("text",text);
+			itnt.putExtra("pos",(Serializable)pos);
 			startActivity(itnt);
 		}
 		

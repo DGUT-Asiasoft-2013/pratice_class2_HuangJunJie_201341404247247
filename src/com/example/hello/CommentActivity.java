@@ -1,59 +1,56 @@
-package pages;
+package com.example.hello;
 
 import java.io.IOException;
 
-import com.example.hello.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import api.Server;
+import entity.Article;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pages.NewListActivity;
 
-public class NewListActivity extends Activity{
+public class CommentActivity extends Activity{
 
-	EditText editTitle,editText;
-
+	EditText editText;
+	Article article;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_content);
+		setContentView(R.layout.comment);
 		
-		editTitle=(EditText) findViewById(R.id.title);
 		editText=(EditText) findViewById(R.id.text);
+		article=(Article) getIntent().getSerializableExtra("pos");
 		
-		findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				sendContent();
+				sendComment();
 				
 			}
 		});
 	}
-
-	void sendContent(){
-		String text=editText.getText().toString();
-		String title=editTitle.getText().toString();
+	
+	void sendComment(){
+		String comment=editText.getText().toString();
 		
 		MultipartBody body=new MultipartBody.Builder()
-				.addFormDataPart("title",title)
-				.addFormDataPart("text",text)
+				.addFormDataPart("text", comment)
 				.build();
 		
-		Request request=Server.requestBuilderWithApi("article")
+		Request request=Server.requestBuilderWithApi("/article/"+article.getId()+"/comments")
+				.method("post",null)
 				.post(body)
 				.build();
 		
@@ -61,39 +58,42 @@ public class NewListActivity extends Activity{
 			
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				final String responseBody=arg1.body().string();
+				
+				try{
+					Log.d("response string", arg1.body().string());
+				}catch(Exception e){
+					Log.d("response string error", e.getMessage());
+				}
 				
 				runOnUiThread(new Runnable() {
 					public void run() {
-						NewListActivity.this.onSucceed(responseBody);
+						onSucceed();
 					}
 				});
-				
 			}
 			
 			@Override
 			public void onFailure(Call arg0, final IOException arg1) {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						NewListActivity.this.onFailure(arg1);
+						CommentActivity.this.onFailure(arg1);
 					}
 				});
 				
 			}
-		});
+		});			
 	}
-	void onSucceed(String text){
-		new AlertDialog.Builder(this).setMessage("发表成功！")
+	void onSucceed(){
+		new AlertDialog.Builder(this).setMessage("评论成功！")
 		.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
-				overridePendingTransition(R.anim.none, R.anim.slide_out_bottom);				
+				overridePendingTransition(R.anim.none, R.anim.slide_out_bottom);
 			}
 		}).show();
-	}
-	
+	}	
 	void onFailure(Exception e){
 		new AlertDialog.Builder(this).setMessage(e.getMessage()).show();
 	}

@@ -43,6 +43,7 @@
         <activity android:name="com.example.hello.PasswordRecoverActivity"></activity>
         <activity android:name="com.example.hello.FeedContentActivity"></activity>
         <activity android:name="pages.NewListActivity"></activity>
+        <activity android:name="com.example.hello.CommentActivity"></activity>
     </application>
 
 </manifest>

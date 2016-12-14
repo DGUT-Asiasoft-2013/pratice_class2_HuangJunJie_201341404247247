@@ -3,16 +3,21 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Article implements Serializable{
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Article implements Serializable{
+	
 	Integer id;
 	Date createDate;
 	Date editDate;
 	
 	String title;
 	String text;
-	String authorAvatar;
-	String authorName;
+	
+	String comment;
+	
+	User author;
 	
 	public Integer getId() {
 		return id;
@@ -44,18 +49,19 @@ public class Article implements Serializable{
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getAuthorAvatar() {
-		return authorAvatar;
-	}
-	public void setAuthorAvatar(String authorAvatar) {
-		this.authorAvatar = authorAvatar;
-	}
-	public String getAuthorName() {
-		return authorName;
-	}
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
+	
+	public User getAuthor(){
+		return author;
 	}
 	
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public void setAuthor(User author){
+		this.author=author;
+	}
 	
 }
